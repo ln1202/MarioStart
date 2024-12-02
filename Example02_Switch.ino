@@ -39,40 +39,23 @@
 
 void setup() {
 	Serial.begin(115200);
-
-   if (!SPIFFS.begin()) {
-        Serial.println("Failed to initialize SPIFFS");
-    }
-  
 	wifi_connect(); // in wifi_info.h
 	//homekit_storage_reset(); // to remove the previous HomeKit pairing storage when you first run this new HomeKit example
-if (WiFi.getMode() == WIFI_STA && WiFi.status() == WL_CONNECTED) {
-        my_homekit_setup(); // Only setup HomeKit in STA mode
-    } else {
-        Serial.println("HomeKit not started: in AP mode.");
-    }
+	my_homekit_setup();
   // if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
   //       Serial.println(F("SSD1306 allocation failed"));
   //       for(;;);
   //   }
     // display.clearDisplay();
-    // display.setTextSize(1);      // 字體大小
-    // display.setTextColor(SSD1306_WHITE); // 字體顏色
+    // display.setTextSize(1);      
+    // display.setTextColor(SSD1306_WHITE); 
     // drawFilledStar(64, 40, 28);
     // display.display();
 }
 
 void loop() {
-	 if (WiFi.getMode() == WIFI_STA && WiFi.status() == WL_CONNECTED) {
-        my_homekit_loop();
-    }
-
-    // Handle web server in AP mode
-    if (WiFi.getMode() == WIFI_AP) {
-        server.handleClient();
-    }
-
-    delay(10); // Avoid busy loops
+	my_homekit_loop();
+	delay(10000);
   
 }
 
